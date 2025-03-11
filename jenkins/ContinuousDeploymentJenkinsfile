@@ -1,0 +1,42 @@
+pipeline {
+    agent any
+    stages {
+        stage("Checkout Java-Project") {
+            steps {
+                echo "Checkout Java-Project"
+                git branch: 'master', url: 'https://github.com/nag9s/simple-java-maven-app.git'
+            }
+        }
+        stage("Clean - Java-Project") {
+            steps {
+                echo "Clean - Java-Project"
+                sh 'mvn clean'
+            }
+        }
+        stage("Build - Java-Project") {
+            steps {
+                echo "Build - Java-Project"
+                sh 'mvn compile'
+            }
+        }
+        stage("Test - Java-Project") {
+            steps {
+                echo "Test - Java-Project"
+                sh 'mvn test'
+            }
+        }
+        stage("Release Package - Java-Project") {
+            steps {
+                echo "Release Package - Java-Project"
+                sh 'mvn package'
+                echo 'Java-Project is ready to release!'
+            }
+        }
+        stage('Deploy- Java-Project') {
+            steps {
+                sh 'mvn install'
+                echo 'Operations team can deploy Java-Project'
+            }
+        }
+    }
+}
